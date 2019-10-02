@@ -5,20 +5,21 @@
 #include <set>
 #include <string>
 
-enum class Role {
+enum class UserRole {
     User, Admin
 };
 
 struct User {
     std::string name;
-    Role role;
+    UserRole role;
 };
 
-class Perm {
-    std::map<std::string, Role> ops = {{"drop", Role::Admin}, {"create", Role::Admin}, {"select", Role::User}};
-
+class Permissions {
+    std::map<std::string, UserRole> ops = {{"drop", UserRole::Admin},
+                                           {"create", UserRole::Admin},
+                                           {"select", UserRole::User}};
   public:
-    bool enableFor(const std::string &op, Role role) {
+    bool enableFor(const std::string &op, UserRole role) {
         auto i = ops.find(op);
         if (i != std::end(ops)) {
             return i->second == role;
@@ -28,13 +29,13 @@ class Perm {
 };
 
 int main(int, char *[]) {
-    Perm perm;
+    Permissions perm;
 
-    auto v = User{"вася", Role::User};
-    auto p = User{"петя", Role::Admin};
+    auto vasya = User{"Вася", UserRole::User};
+    auto petya = User{"Петя", UserRole::Admin};
 
-    std::cout << perm.enableFor("drop", v.role) << std::endl;
-    std::cout << perm.enableFor("drop", p.role) << std::endl;
+    std::cout << perm.enableFor("drop", vasya.role) << std::endl;
+    std::cout << perm.enableFor("drop", petya.role) << std::endl;
 
     return 0;
 }

@@ -14,7 +14,7 @@ class Ops {
     int count = 0;
 
   public:
-    void doIt() {
+    void doSomeMagic() {
         ++count;
     };
     void dump() {
@@ -31,11 +31,11 @@ class Ops {
 
 int main(int, char *[]) {
     Ops n;
-    n.doIt();
+    n.doSomeMagic();
 
     auto snap = n.createSnapshot();
-
-    n.doIt();
+    
+    n.doSomeMagic();
     n.dump();
 
     n.restoreSnapshot(snap);

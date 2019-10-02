@@ -3,7 +3,7 @@
 #include <iostream>
 
 class Handler {
-    Handler *next;
+    Handler *next; // like singly linked list
 
   public:
     Handler() : next(nullptr) {}
@@ -59,10 +59,15 @@ class CreateHandler : public Handler {
 };
 
 int main(int, char *[]) {
-    DropHandler handler;
-
+    Handler handler;
+    
+    /*
+     * Пример - очень простой исполнитель SQL команд на основе данного паттерна.
+     */
+    DropHandler drop;
     SelectHandler select;
     CreateHandler create;
+    handler.add(&drop);
     handler.add(&select);
     handler.add(&create);
 

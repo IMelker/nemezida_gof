@@ -8,12 +8,12 @@ class Document {
 
   public:
     void create() {
-        std::cout << "new document" << std::endl;
+        std::cout << "New document" << std::endl;
     }
 
     void newPara(const std::string &para) {
         text += para + "\n";
-        std::cout << "new para " << para << std::endl;
+        std::cout << "New para " << para << std::endl;
     }
 
     void saveAs(const std::string &name) {
@@ -61,6 +61,11 @@ class SaveAsCommand : public Command {
 int main(int, char *[]) {
     Document doc;
 
+    /*
+     * Пример: Обработчик документов, например, как Word
+     * Для пользователя необходимо выполнить набор команд подряд
+     */
+    
     std::vector<Command *> history;
     history.push_back(new NewDocumentCommand(&doc));
     history.push_back(new ParaCommand(&doc, "Manual"));
@@ -68,8 +73,12 @@ int main(int, char *[]) {
     history.push_back(new ParaCommand(&doc, "Hello, World!"));
     history.push_back(new SaveAsCommand(&doc, "hello.doc"));
 
-    for (auto c: history) {
+    for (auto *c: history) {
         c->execute();
+    }
+    
+    for (auto *c: history) {
+        delete c;
     }
 
     return 0;

@@ -10,7 +10,7 @@ class Generator {
 class HardwareGenerator : public Generator {
   public:
     size_t seed(size_t) override {
-        std::cout << "generate using mac address" << std::endl;
+        std::cout << "Generate using mac address" << std::endl;
         return 42;
     }
 };
@@ -18,7 +18,7 @@ class HardwareGenerator : public Generator {
 class SoftwareGenerator : public Generator {
   public:
     size_t seed(size_t) override {
-        std::cout << "generate using software emulator" << std::endl;
+        std::cout << "Generate using software emulator" << std::endl;
         return 0;
     }
 };

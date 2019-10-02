@@ -61,7 +61,6 @@ int main(int, char *[]) {
     UiObserver ui(&lang);
 
     lang.setLanguage(Lang::ru);
-
     lang.setLanguage(Lang::en);
 
     return 0;

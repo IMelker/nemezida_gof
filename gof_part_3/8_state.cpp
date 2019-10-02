@@ -13,16 +13,14 @@ class Application {
     }
 
     void login();
-
-    void doIt();
-
+    void doSomeMagic();
     void logout();
 };
 
 class CommandHandler {
   public:
     virtual void login(Application *) = 0;
-    virtual void doIt(Application *) = 0;
+    virtual void doSomeMagic(Application *) = 0;
     virtual void logout(Application *) = 0;
 };
 
@@ -30,8 +28,8 @@ void Application::login() {
     cmdHandler->login(this);
 }
 
-void Application::doIt() {
-    cmdHandler->doIt(this);
+void Application::doSomeMagic() {
+    cmdHandler->doSomeMagic(this);
 }
 
 void Application::logout() {
@@ -41,10 +39,10 @@ void Application::logout() {
 class LogginedHandler : public CommandHandler {
   public:
     void login(Application *) override {
-        std::cout << "already login" << std::endl;
+        std::cout << "Error: Already login" << std::endl;
     }
-    void doIt(Application *) override {
-        std::cout << "success" << std::endl;
+    void doSomeMagic(Application *) override {
+        std::cout << "Info: Do some magic" << std::endl;
     }
     void logout(Application *m) override;
 };
@@ -52,19 +50,19 @@ class LogginedHandler : public CommandHandler {
 class Anonymous : public CommandHandler {
   public:
     void login(Application *m) override {
-        std::cout << "work as loggined" << std::endl;
+        std::cout << "Info: Successful login" << std::endl;
         m->setCurrent(new LogginedHandler());
     }
-    void doIt(Application *) override {
-        std::cout << "error" << std::endl;
+    void doSomeMagic(Application *) override {
+        std::cout << "Error: Need to login" << std::endl;
     }
     void logout(Application *) override {
-        std::cout << "already logout" << std::endl;
+        std::cout << "Error: Already logout" << std::endl;
     }
 };
 
 void LogginedHandler::logout(Application *m) {
-    std::cout << "work as anonymous" << std::endl;
+    std::cout << "Info: Successful logout" << std::endl;
     m->setCurrent(new Anonymous());
 }
 
@@ -75,11 +73,11 @@ Application::Application() {
 
 int main(int, char *[]) {
     Application app;
-
-    app.doIt();
+    
+    app.doSomeMagic();
     app.logout();
     app.login();
-    app.doIt();
+    app.doSomeMagic();
     app.login();
     app.logout();
 
